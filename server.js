@@ -1,9 +1,9 @@
 const express = require('express');
-const serverless = require("serverless-http");
+const http = require('http');
 const { Server } = require('socket.io');
-const app = express();
-const server = serverless.createServer(app);
 
+const app = express();
+const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
         origin: "*",
@@ -23,5 +23,6 @@ io.on('connection', (socket) => {
     })
 })
 
-module.exports = app;
-module.exports.handler = serverless(app);
+server.listen(3000, () => {
+    console.log('Chat server is running on 3000')
+})
